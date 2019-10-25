@@ -1,14 +1,14 @@
-#ifndef _GAME_
-#define _GAME_
+#ifndef _RESULTSCENE_
+#define _RESULTSCENE_
 
 #include "Scene.h"
 
-class GAME :public SCENE
+class RESULT :public SCENE
 {
 public:
 
-	GAME();
-	~GAME();
+	RESULT();
+	~RESULT();
 
 	virtual void UpdataScene();
 	virtual void Loading();
@@ -17,5 +17,5 @@ public:
 	virtual void Release();
 };
 
-#endif // !_GAME_
+#endif // !_RESULTSCENE_
 

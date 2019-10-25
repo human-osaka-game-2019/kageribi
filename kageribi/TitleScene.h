@@ -7,7 +7,8 @@ class TITLE :public SCENE
 {
 public:
 
-
+	TITLE();
+	~TITLE();
 
 	virtual void UpdataScene();
 	virtual void Loading();

@@ -14,7 +14,7 @@ public:
 		ReleaseStep
 	};
 
-	STEP Step = LoadStep;
+	STEP step = LoadStep;
 
 	virtual void UpdataScene() = 0;
 
@@ -23,8 +23,6 @@ public:
 	virtual void Draw() = 0;
 	virtual void Release() = 0;
 
-private:
-	int scene_state;
 };
 
 #endif // !_SCENE_

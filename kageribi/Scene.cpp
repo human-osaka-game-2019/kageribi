@@ -2,7 +2,7 @@
 
 void SCENE::UpdataScene()
 {
-	switch(scene_state)
+	switch(step)
 	{
 	case SCENE::STEP::LoadStep:
 		
