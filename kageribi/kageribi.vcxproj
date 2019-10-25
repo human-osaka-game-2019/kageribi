@@ -125,12 +125,14 @@
   <ItemGroup>
     <ClCompile Include="DIrectX.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectX.h" />
     <ClInclude Include="Main.h" />
+    <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
