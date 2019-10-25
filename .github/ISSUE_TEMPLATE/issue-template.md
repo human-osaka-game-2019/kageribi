@@ -1,10 +1,10 @@
 ---
 name: issue template
-about: "[AA]"
+about: template
 title: ''
 labels: ''
 assignees: chihiro390
 
 ---
 
-AAA
+issue template
