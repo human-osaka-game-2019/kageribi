@@ -14,24 +14,17 @@ public:
 		ReleaseStep
 	};
 
-	enum SCENE_STATUS
-	{
-		Title,
-		Game,
-		Result
-	};
+	STEP Step = LoadStep;
 
-	//STEP Step = LoadStep;
+	virtual void UpdataScene() = 0;
 
-	virtual void UpdataScene();
+	virtual void Loading() = 0;
+	virtual void Processing() = 0;
+	virtual void Draw() = 0;
+	virtual void Release() = 0;
 
-
-protected:
-	virtual void LoadStep();
-	virtual void processing();
-	virtual void Draw();
-	virtual void Release();
-
+private:
+	int scene_state;
 };
 
 #endif // !_SCENE_
