@@ -1,46 +1,13 @@
 ﻿#include "Window.h"
 #include "XInput.h"
 
-XBOXPad* Player1;
-int main(int argc, char* argv[])
-{
-	Player1 = new XBOXPad(1);
 
-
-}
-
-void Control()
-{
-	// 1Frameあたりの時間を測定 
-	static DWORD PreTime = timeGetTime();
-	DWORD NowTime = timeGetTime();
-	float FrameTime = (float)(NowTime - PreTime) / 1000.0f;
-	PreTime = timeGetTime();
-
-	static XINPUT_STATE g_padState;
-	XInputGetState(0, &g_padState);
-
-	float speed = 2.0f;
-	XINPUT_KEYSTROKE_KEYDOWN;
-
-	// 上下左右(左スティック）
-	if ((g_padState.Gamepad.sThumbLX < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
-		g_padState.Gamepad.sThumbLX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) &&
-		(g_padState.Gamepad.sThumbLY < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
-			g_padState.Gamepad.sThumbLY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE))
-	{
-		// 入力後、処理内容を書く
-		g_padState.Gamepad.sThumbLX = 0;
-		g_padState.Gamepad.sThumbLY = 0;
-	}
-
-}
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPTSTR lpszCmdLine, int nCmdShow)
 {
 	HWND hWnd;
-	MSG msg;
+	
 	CMainWindow* pMainWindow;
 
 	WNDCLASS WndClass;                                                   // 윈도우 클래스 타입인 WNDCLASSEX의 변수를 만들고 각 필드에 값 부여
@@ -76,6 +43,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	ShowWindow(hWnd, nCmdShow);								 // nCmdShow는 윈도우를 화면에 나타내는 방법으로 상수값을 제공한다.
 	UpdateWindow(hWnd);													 // 윈도우에 WM_PAINT 메시지를 보내 화면에 기본 출력을 한다.
 
+	MSG msg;
+
 	while (GetMessage(&msg, NULL, 0, 0))
 	{
 			TranslateMessage(&msg);                                          // 두 메시지를 하나로 변형할때 사용한다.
@@ -85,4 +54,40 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 
 	return TRUE;
+}
+
+XBOXPad* Player1;
+
+int main(int argc, char* argv[])
+{
+
+	Player1 = new XBOXPad(1);
+
+}
+
+void Control()
+{
+	// 1Frameあたりの時間を測定 
+	static DWORD PreTime = timeGetTime();
+	DWORD NowTime = timeGetTime();
+	float FrameTime = (float)(NowTime - PreTime) / 1000.0f;
+	PreTime = timeGetTime();
+
+	static XINPUT_STATE g_padState;
+	XInputGetState(0, &g_padState);
+
+	float speed = 2.0f;
+	XINPUT_KEYSTROKE_KEYDOWN;
+
+	// 上下左右(左スティック）
+	if ((g_padState.Gamepad.sThumbLX < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
+		g_padState.Gamepad.sThumbLX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) &&
+		(g_padState.Gamepad.sThumbLY < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
+			g_padState.Gamepad.sThumbLY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE))
+	{
+		// 入力後、処理内容を書く
+		g_padState.Gamepad.sThumbLX = 0;
+		g_padState.Gamepad.sThumbLY = 0;
+	}
+
 }
