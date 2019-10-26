@@ -3,10 +3,11 @@
 
 #include <Windows.h>
 #include <d3d9.h>
+#include <d3dx9.h>
 
 typedef struct
 {
-	LPDIRECT3DTEXTURE9 TextureDate;
+	LPDIRECT3DTEXTURE9 TextureData;
 	int width;
 	int height;
 } Texture;
