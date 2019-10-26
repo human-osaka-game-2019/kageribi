@@ -20,10 +20,11 @@ private:
 public:
 
 	XBOXPad(int playerNumber);
+	XBOXPad* Player1 = new XBOXPad(1);
 	XINPUT_STATE GetState();
 	bool IsConnected();
 	void Vibrate(int leftVal = 0, int rightVal = 0);
-
+	
 };
 
 /*if (state.Gamepad.wButtons & XINPUT_GAMEPAD_A) {
