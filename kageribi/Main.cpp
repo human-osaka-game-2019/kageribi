@@ -16,180 +16,177 @@ int PadControl(int argc, char* argv[])
 	std::cout << "[X] Vibrate Both\n";
 	std::cout << "[Y] Vibrate Neither\n";
 	std::cout << "[BACK] Exit\n";
-	
-	while (true)
+
+	if (Player1->IsConnected())
 	{
 
-		if (Player1->IsConnected())
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP)
 		{
 
-			if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP)
-			{
-
-				std::cout << "[UP] Working Now\n";
-
-			}
-
-			if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_DOWN)
-			{
-
-				std::cout << "[DOWN] Working Now\n";
-
-			}
-
-			if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT)
-			{
-
-				std::cout << "[LEFT] Working Now\n";
-
-			}
-
-			if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT)
-			{
-
-				std::cout << "[RIGHT] Working Now\n";
-
-			}
-
-			if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A)
-			{
-				std::cout << "[A] Working Now\n";
-				Player1->Vibrate(65535, 0);
-			}
-
-			if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_B)
-			{
-				std::cout << "[B] Working Now\n";
-				Player1->Vibrate(0, 65535);
-			}
-
-			if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_X)
-			{
-				std::cout << "[X] Working Now\n";
-				Player1->Vibrate(65535, 65535);
-			}
-
-			if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_Y)
-			{
-				std::cout << "[Y] Working Now\n";
-				Player1->Vibrate();
-			}
-
-			if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)
-			{
-				std::cout << "[LEFT SHOULDER] Working Now\n";
-			}
-
-			if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
-			{
-				std::cout << "[RIGHT SHOULDER] Working Now\n";
-			}
-
-			if (Player1->GetState().Gamepad.bLeftTrigger & XINPUT_GAMEPAD_TRIGGER_THRESHOLD)
-			{
-
-				std::cout << "[LEFT TRIGGER] Working Now\n";
-
-			}
-
-			if (Player1->GetState().Gamepad.bRightTrigger & XINPUT_GAMEPAD_TRIGGER_THRESHOLD)
-			{
-
-				std::cout << "[RIGHT TRIGGER] Working Now\n";
-
-			}
-
-			if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_THUMB)
-			{
-
-				std::cout << "[Left Stick] Working Now\n";
-
-				float LX = Player1->GetState().Gamepad.sThumbLX;
-				float LY = Player1->GetState().Gamepad.sThumbLY;
-
-				// Lスティックが押された距離(どのぐらい押されたか)
-				float magnitude = sqrt(LX * LX + LY * LY);
-
-				// Lスティックが押された方向
-				float normalizedLX = LX / magnitude;
-				float normalizedLY = LY / magnitude;
-
-				float normalizedMagnitude = 0;
-
-				if (magnitude > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
-				{
-					// 最大値
-					if (magnitude > 32767) magnitude = 32767;
-
-					// DeadZoneの限界の相対的な大きさ
-					magnitude -= XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE;
-
-
-					//　数値を0.0 から 1.0まで与えることができる
-					normalizedMagnitude = magnitude / (32767 - XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
-				}
-				else // コントローラーがDeadZoneにある時、数値が減少(reduce or Zero Out)
-				{
-					magnitude = 0.0;
-					normalizedMagnitude = 0.0;
-				}
-
-
-			}
-
-			if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_THUMB)
-			{
-
-				std::cout << "[Right Stick] Working Now\n";
-
-				float RX = Player1->GetState().Gamepad.sThumbRX;
-				float RY = Player1->GetState().Gamepad.sThumbRY;
-
-				// Rスティックが押された距離(どのぐらい押されたか)
-				float magnitude = sqrt(RX * RX + RY * RY);
-
-				// Rスティックが押された方向
-				float normalizedRX = RX / magnitude;
-				float normalizedRY = RY / magnitude;
-
-				float normalizedMagnitude = 0;
-
-				if (magnitude > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)
-				{
-					// 最大値
-					if (magnitude > 32767) magnitude = 32767;
-
-					// DeadZoneの限界の相対的な大きさ
-					magnitude -= XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
-
-
-					//　数値を0.0 から 1.0まで与えることができる
-					normalizedMagnitude = magnitude / (32767 - XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
-				}
-				else // コントローラーがDeadZoneにある時、数値が減少(reduce or Zero Out)
-				{
-					magnitude = 0.0;
-					normalizedMagnitude = 0.0;
-				}
-
-
-			}
-
-			if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_BACK)
-			{
-				break;
-			}
+			std::cout << "[UP] Working Now\n";
 
 		}
-		else
+
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_DOWN)
 		{
-			std::cout << "\n\tERROR! PLAYER 1 - XBOX 360 Controller Not Found!\n";
-			std::cout << "Press Any Key To Exit.";
-			std::cin.get();
+
+			std::cout << "[DOWN] Working Now\n";
+
+		}
+
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT)
+		{
+
+			std::cout << "[LEFT] Working Now\n";
+
+		}
+
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT)
+		{
+
+			std::cout << "[RIGHT] Working Now\n";
+
+		}
+
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A)
+		{
+			std::cout << "[A] Working Now\n";
+			Player1->Vibrate(65535, 0);
+		}
+
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_B)
+		{
+			std::cout << "[B] Working Now\n";
+			Player1->Vibrate(0, 65535);
+		}
+
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_X)
+		{
+			std::cout << "[X] Working Now\n";
+			Player1->Vibrate(65535, 65535);
+		}
+
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_Y)
+		{
+			std::cout << "[Y] Working Now\n";
+			Player1->Vibrate();
+		}
+
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)
+		{
+			std::cout << "[LEFT SHOULDER] Working Now\n";
+		}
+
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
+		{
+			std::cout << "[RIGHT SHOULDER] Working Now\n";
+		}
+
+		if (Player1->GetState().Gamepad.bLeftTrigger & XINPUT_GAMEPAD_TRIGGER_THRESHOLD)
+		{
+
+			std::cout << "[LEFT TRIGGER] Working Now\n";
+
+		}
+
+		if (Player1->GetState().Gamepad.bRightTrigger & XINPUT_GAMEPAD_TRIGGER_THRESHOLD)
+		{
+
+			std::cout << "[RIGHT TRIGGER] Working Now\n";
+
+		}
+
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_THUMB)
+		{
+
+			std::cout << "[Left Stick] Working Now\n";
+
+			float LX = Player1->GetState().Gamepad.sThumbLX;
+			float LY = Player1->GetState().Gamepad.sThumbLY;
+
+			// Lスティックが押された距離(どのぐらい押されたか)
+			float magnitude = sqrt(LX * LX + LY * LY);
+
+			// Lスティックが押された方向
+			float normalizedLX = LX / magnitude;
+			float normalizedLY = LY / magnitude;
+
+			float normalizedMagnitude = 0;
+
+			if (magnitude > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
+			{
+				// 最大値
+				if (magnitude > 32767) magnitude = 32767;
+
+				// DeadZoneの限界の相対的な大きさ
+				magnitude -= XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE;
+
+
+				//　数値を0.0 から 1.0まで与えることができる
+				normalizedMagnitude = magnitude / (32767 - XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
+			}
+			else // コントローラーがDeadZoneにある時、数値が減少(reduce or Zero Out)
+			{
+				magnitude = 0.0;
+				normalizedMagnitude = 0.0;
+			}
+
+
+		}
+
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_THUMB)
+		{
+
+			std::cout << "[Right Stick] Working Now\n";
+
+			float RX = Player1->GetState().Gamepad.sThumbRX;
+			float RY = Player1->GetState().Gamepad.sThumbRY;
+
+			// Rスティックが押された距離(どのぐらい押されたか)
+			float magnitude = sqrt(RX * RX + RY * RY);
+
+			// Rスティックが押された方向
+			float normalizedRX = RX / magnitude;
+			float normalizedRY = RY / magnitude;
+
+			float normalizedMagnitude = 0;
+
+			if (magnitude > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)
+			{
+				// 最大値
+				if (magnitude > 32767) magnitude = 32767;
+
+				// DeadZoneの限界の相対的な大きさ
+				magnitude -= XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
+
+
+				//　数値を0.0 から 1.0まで与えることができる
+				normalizedMagnitude = magnitude / (32767 - XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
+			}
+			else // コントローラーがDeadZoneにある時、数値が減少(reduce or Zero Out)
+			{
+				magnitude = 0.0;
+				normalizedMagnitude = 0.0;
+			}
+
+
+		}
+
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_BACK)
+		{
 			break;
 		}
 
 	}
+	else
+	{
+		std::cout << "\n\tERROR! PLAYER 1 - XBOX 360 Controller Not Found!\n";
+		std::cout << "Press Any Key To Exit.";
+		std::cin.get();
+		break;
+	}
+
+		
 
 	delete(Player1);
 
