@@ -10,7 +10,7 @@ void OBJECTMANAGER::Draw()
 
 }
 
-void OBJECTMANAGER::Entry(char* instance)
+void OBJECTMANAGER::Entry(OBJECTMANAGER* instance)
 {
 	this->instance_list.push_back(instance);
 }

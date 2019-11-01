@@ -14,12 +14,11 @@ public:
 
 private:
 
-	std::vector<char*> instance_list;
+	std::vector<OBJECTMANAGER*> instance_list;
 
-	void Entry(char* instance);
+	void Entry(OBJECTMANAGER* instance);
 	void Exit(int number);
 
 };
 
-#endif // !_OBJECTMANAGER_
-
+#endif // !OBJECTMANAGER_HEADER
