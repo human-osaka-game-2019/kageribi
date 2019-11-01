@@ -1,8 +1,7 @@
-#ifndef _OBJECTMANAGER_
-#define _OBJECTMANAGER_
+#ifndef OBJECTMANAGER_HEADER
+#define OBJECTMANAGER_HEADER
 #include <vector>
 
-using namespace std;
 
 class OBJECTMANAGER
 {
@@ -15,7 +14,7 @@ public:
 
 private:
 
-	vector<char*> instance;
+	std::vector<char*> instance_list;
 
 	void Entry(char* instance);
 	void Exit(int number);

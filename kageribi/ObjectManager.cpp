@@ -12,12 +12,12 @@ void OBJECTMANAGER::Draw()
 
 void OBJECTMANAGER::Entry(char* instance)
 {
-	this->instance.push_back(instance);
+	this->instance_list.push_back(instance);
 }
 
 void OBJECTMANAGER::Exit(int number)
 {
-	this->instance.erase(this->instance.begin() + number);
+	this->instance_list.erase(this->instance_list.begin() + number);
 }
 
 OBJECTMANAGER::OBJECTMANAGER()
