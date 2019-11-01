@@ -11,10 +11,6 @@ int PadControl(int argc, char* argv[])
 	Player1 = new XBOXPad(1);
 
 	std::cout << "Instructions:\n";
-	std::cout << "[A] Vibrate Left Only\n";
-	std::cout << "[B] Vibrate Right Only\n";
-	std::cout << "[X] Vibrate Both\n";
-	std::cout << "[Y] Vibrate Neither\n";
 	std::cout << "[BACK] Exit\n";
 
 	if (Player1->IsConnected())
@@ -22,30 +18,22 @@ int PadControl(int argc, char* argv[])
 
 		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP)
 		{
-
 			std::cout << "[UP] Working Now\n";
-
 		}
 
 		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_DOWN)
 		{
-
 			std::cout << "[DOWN] Working Now\n";
-
 		}
 
 		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT)
 		{
-
 			std::cout << "[LEFT] Working Now\n";
-
 		}
 
 		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT)
 		{
-
 			std::cout << "[RIGHT] Working Now\n";
-
 		}
 
 		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A)
@@ -84,22 +72,17 @@ int PadControl(int argc, char* argv[])
 
 		if (Player1->GetState().Gamepad.bLeftTrigger & XINPUT_GAMEPAD_TRIGGER_THRESHOLD)
 		{
-
 			std::cout << "[LEFT TRIGGER] Working Now\n";
-
 		}
 
 		if (Player1->GetState().Gamepad.bRightTrigger & XINPUT_GAMEPAD_TRIGGER_THRESHOLD)
 		{
-
 			std::cout << "[RIGHT TRIGGER] Working Now\n";
-
 		}
 
-		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_THUMB)
+		if ((Player1->GetState().Gamepad.sThumbLX & XINPUT_GAMEPAD_LEFT_THUMB) &&
+			(Player1->GetState().Gamepad.sThumbLY & XINPUT_GAMEPAD_LEFT_THUMB))
 		{
-
-			std::cout << "[Left Stick] Working Now\n";
 
 			float LX = Player1->GetState().Gamepad.sThumbLX;
 			float LY = Player1->GetState().Gamepad.sThumbLY;
@@ -131,13 +114,30 @@ int PadControl(int argc, char* argv[])
 				normalizedMagnitude = 0.0;
 			}
 
+			if (Player1->GetState().Gamepad.sThumbLX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
+			{
+				std::cout << "[L STICK RIGHT] Working Now\n";
+			}
 
+			if (Player1->GetState().Gamepad.sThumbLX < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
+			{
+				std::cout << "[L STICK LEFT] Working Now\n";
+			}
+
+			if (Player1->GetState().Gamepad.sThumbLY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
+			{
+				std::cout << "[L STICK UP] Working Now\n";
+			}
+
+			if (Player1->GetState().Gamepad.sThumbLY < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
+			{
+				std::cout << "[L STICK DOWN] Working Now\n";
+			}
 		}
 
-		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_THUMB)
+		if ((Player1->GetState().Gamepad.sThumbRX & XINPUT_GAMEPAD_RIGHT_THUMB) &&
+			(Player1->GetState().Gamepad.sThumbRY & XINPUT_GAMEPAD_RIGHT_THUMB))
 		{
-
-			std::cout << "[Right Stick] Working Now\n";
 
 			float RX = Player1->GetState().Gamepad.sThumbRX;
 			float RY = Player1->GetState().Gamepad.sThumbRY;
@@ -169,12 +169,30 @@ int PadControl(int argc, char* argv[])
 				normalizedMagnitude = 0.0;
 			}
 
+			if (Player1->GetState().Gamepad.sThumbRX > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)
+			{
+				std::cout << "[R STICK RIGHT] Working Now\n";
+			}
 
+			if (Player1->GetState().Gamepad.sThumbRX < -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)
+			{
+				std::cout << "[R STICK LEFT] Working Now\n";
+			}
+
+			if (Player1->GetState().Gamepad.sThumbRY > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)
+			{
+				std::cout << "[R STICK UP] Working Now\n";
+			}
+
+			if (Player1->GetState().Gamepad.sThumbRY < -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)
+			{
+				std::cout << "[R STICK DOWN] Working Now\n";
+			}
 		}
 
 		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_BACK)
 		{
-			break;
+
 		}
 
 	}
@@ -183,10 +201,9 @@ int PadControl(int argc, char* argv[])
 		std::cout << "\n\tERROR! PLAYER 1 - XBOX 360 Controller Not Found!\n";
 		std::cout << "Press Any Key To Exit.";
 		std::cin.get();
-		break;
 	}
 
-		
+
 
 	delete(Player1);
 
@@ -199,7 +216,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 {
 
 	HWND hWnd;
-	
+
 	CMainWindow* pMainWindow;
 
 	WNDCLASS WndClass;                                                   // 윈도우 클래스 타입인 WNDCLASSEX의 변수를 만들고 각 필드에 값 부여
@@ -241,9 +258,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	while (GetMessage(&msg, NULL, 0, 0))
 	{
 
-			TranslateMessage(&msg);                                          // 두 메시지를 하나로 변형할때 사용한다.
-			DispatchMessage(&msg);                                           // 메시지를 처리하는 함수에 메시지를 보낸다.
-				
+		TranslateMessage(&msg);                                          // 두 메시지를 하나로 변형할때 사용한다.
+		DispatchMessage(&msg);                                           // 메시지를 처리하는 함수에 메시지를 보낸다.
+
 	}
 
 	return (int)msg.wParam;
