@@ -1,5 +1,5 @@
-#ifndef _SCENE_
-#define _SCENE_
+#ifndef SCENE_HEADER
+#define SCENE_HEADER
 
 class SCENE
 {
@@ -14,24 +14,15 @@ public:
 		ReleaseStep
 	};
 
-	enum SCENE_STATUS
-	{
-		Title,
-		Game,
-		Result
-	};
+	STEP step = LoadStep;
 
-	//STEP Step = LoadStep;
+	virtual void UpdataScene() = 0;
 
-	virtual void UpdataScene();
-
-
-protected:
-	virtual void LoadStep();
-	virtual void processing();
-	virtual void Draw();
-	virtual void Release();
+	virtual void Loading() = 0;
+	virtual void Processing() = 0;
+	virtual void Draw() = 0;
+	virtual void Release() = 0;
 
 };
 
-#endif // !_SCENE_
+#endif // !SCENE_HEADER

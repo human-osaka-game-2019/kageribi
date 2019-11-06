@@ -1,5 +1,5 @@
-#ifndef _WINDOW_H_
-#define _WINDOW_H_
+#ifndef WINDOW_HEADER
+#define WINDOW_HEADER
 
 #include <Windows.h>
 
@@ -28,4 +28,4 @@ public :
 
 };
 
-#endif
+#endif // !WINDOW_HEADER
