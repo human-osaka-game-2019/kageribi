@@ -1,9 +1,20 @@
-#ifndef _MAINLOOP_
-#define _MAINLOOP_
+#ifndef MAINLOOP_HEADER
+#define MAINLOOP_HEADER
 
+#include "TitleScene.h"
+#include "Game.h"
+#include "ResultScene.h"
 
-struct LOOP
+class LOOP
 {
+public:
+	void UpdateScene();
+
+private:
+	TITLE title;
+	GAME game;
+	RESULT result;
+
 	enum SCENE_STATUS
 	{
 		Title,
@@ -13,11 +24,10 @@ struct LOOP
 
 	SCENE_STATUS state = Title;
 
-	void UpdateScene();
 
 
 
 };
 
-#endif // !_MAINLOOP_
+#endif // !MAINLOOP_HEADER
 

@@ -1,5 +1,5 @@
-#ifndef _TITLESCENE_
-#define _TITLESCENE_
+#ifndef TITLESCENE_HEADER
+#define TITLESCENE_HEADER
 
 #include "Scene.h"
 
@@ -9,8 +9,10 @@ public:
 
 	TITLE();
 	~TITLE();
-
 	virtual void UpdataScene();
+
+private:
+
 	virtual void Loading();
 	virtual void Processing();
 	virtual void Draw();
@@ -18,4 +20,4 @@ public:
 };
 
 
-#endif // !_TITLESCENE_
+#endif // !TITLESCENE_HEADER

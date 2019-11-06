@@ -9,8 +9,10 @@ public:
 
 	RESULT();
 	~RESULT();
-
 	virtual void UpdataScene();
+
+private:
+
 	virtual void Loading();
 	virtual void Processing();
 	virtual void Draw();

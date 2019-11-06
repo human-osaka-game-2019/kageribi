@@ -1,5 +1,5 @@
-#ifndef _SCENE_
-#define _SCENE_
+#ifndef SCENE_HEADER
+#define SCENE_HEADER
 
 class SCENE
 {
@@ -25,4 +25,4 @@ public:
 
 };
 
-#endif // !_SCENE_
+#endif // !SCENE_HEADER

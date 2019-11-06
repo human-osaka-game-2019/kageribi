@@ -1,4 +1,5 @@
 ﻿#include "Window.h"
+#include "MainLoop.h"
 #include "Main.h"
 
 
@@ -9,7 +10,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	MSG msg;
 	CMainWindow* pMainWindow;
 
-	LOOP main;
+	LOOP loop;
+
 
 	WNDCLASS WndClass;                                                   // 윈도우 클래스 타입인 WNDCLASSEX의 변수를 만들고 각 필드에 값 부여
 
@@ -48,7 +50,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	{
 			TranslateMessage(&msg);                                          // 두 메시지를 하나로 변형할때 사용한다.
 			DispatchMessage(&msg);                                 // 메시지를 처리하는 함수에 메시지를 보낸다.
-			main.UpdateScene();
+			loop.UpdateScene();
 
 	}
 	return (int)msg.wParam;
