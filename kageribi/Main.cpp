@@ -1,10 +1,222 @@
-﻿#include "Window.h"
+﻿#include <iostream>
+#include "Window.h"
+#include "XInput.h"
+
+# define XINPUT_GAMEPAD_TRIGGER_THRESHOLD 30
+
+XBOXPad* Player1;
+
+int PadControl(int argc, char* argv[])
+{
+	Player1 = new XBOXPad(1);
+
+	std::cout << "Instructions:\n";
+	std::cout << "[BACK] Exit\n";
+
+	if (Player1->IsConnected())
+	{
+
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP)
+		{
+			std::cout << "[UP] Working Now\n";
+		}
+
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_DOWN)
+		{
+			std::cout << "[DOWN] Working Now\n";
+		}
+
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT)
+		{
+			std::cout << "[LEFT] Working Now\n";
+		}
+
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT)
+		{
+			std::cout << "[RIGHT] Working Now\n";
+		}
+
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A)
+		{
+			std::cout << "[A] Working Now\n";
+			Player1->Vibrate(65535, 0);
+		}
+
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_B)
+		{
+			std::cout << "[B] Working Now\n";
+			Player1->Vibrate(0, 65535);
+		}
+
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_X)
+		{
+			std::cout << "[X] Working Now\n";
+			Player1->Vibrate(65535, 65535);
+		}
+
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_Y)
+		{
+			std::cout << "[Y] Working Now\n";
+			Player1->Vibrate();
+		}
+
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)
+		{
+			std::cout << "[LEFT SHOULDER] Working Now\n";
+		}
+
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
+		{
+			std::cout << "[RIGHT SHOULDER] Working Now\n";
+		}
+
+		if (Player1->GetState().Gamepad.bLeftTrigger & XINPUT_GAMEPAD_TRIGGER_THRESHOLD)
+		{
+			std::cout << "[LEFT TRIGGER] Working Now\n";
+		}
+
+		if (Player1->GetState().Gamepad.bRightTrigger & XINPUT_GAMEPAD_TRIGGER_THRESHOLD)
+		{
+			std::cout << "[RIGHT TRIGGER] Working Now\n";
+		}
+
+		if ((Player1->GetState().Gamepad.sThumbLX & XINPUT_GAMEPAD_LEFT_THUMB) &&
+			(Player1->GetState().Gamepad.sThumbLY & XINPUT_GAMEPAD_LEFT_THUMB))
+		{
+
+			float LX = Player1->GetState().Gamepad.sThumbLX;
+			float LY = Player1->GetState().Gamepad.sThumbLY;
+
+			// Lスティックが押された距離(どのぐらい押されたか)
+			float magnitude = sqrt(LX * LX + LY * LY);
+
+			// Lスティックが押された方向
+			float normalizedLX = LX / magnitude;
+			float normalizedLY = LY / magnitude;
+
+			float normalizedMagnitude = 0;
+
+			if (magnitude > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
+			{
+				// 最大値
+				if (magnitude > 32767) magnitude = 32767;
+
+				// DeadZoneの限界の相対的な大きさ
+				magnitude -= XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE;
+
+
+				//　数値を0.0 から 1.0まで与えることができる
+				normalizedMagnitude = magnitude / (32767 - XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
+			}
+			else // コントローラーがDeadZoneにある時、数値が減少(reduce or Zero Out)
+			{
+				magnitude = 0.0;
+				normalizedMagnitude = 0.0;
+			}
+
+			if (Player1->GetState().Gamepad.sThumbLX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
+			{
+				std::cout << "[L STICK RIGHT] Working Now\n";
+			}
+
+			if (Player1->GetState().Gamepad.sThumbLX < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
+			{
+				std::cout << "[L STICK LEFT] Working Now\n";
+			}
+
+			if (Player1->GetState().Gamepad.sThumbLY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
+			{
+				std::cout << "[L STICK UP] Working Now\n";
+			}
+
+			if (Player1->GetState().Gamepad.sThumbLY < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
+			{
+				std::cout << "[L STICK DOWN] Working Now\n";
+			}
+		}
+
+		if ((Player1->GetState().Gamepad.sThumbRX & XINPUT_GAMEPAD_RIGHT_THUMB) &&
+			(Player1->GetState().Gamepad.sThumbRY & XINPUT_GAMEPAD_RIGHT_THUMB))
+		{
+
+			float RX = Player1->GetState().Gamepad.sThumbRX;
+			float RY = Player1->GetState().Gamepad.sThumbRY;
+
+			// Rスティックが押された距離(どのぐらい押されたか)
+			float magnitude = sqrt(RX * RX + RY * RY);
+
+			// Rスティックが押された方向
+			float normalizedRX = RX / magnitude;
+			float normalizedRY = RY / magnitude;
+
+			float normalizedMagnitude = 0;
+
+			if (magnitude > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)
+			{
+				// 最大値
+				if (magnitude > 32767) magnitude = 32767;
+
+				// DeadZoneの限界の相対的な大きさ
+				magnitude -= XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
+
+
+				//　数値を0.0 から 1.0まで与えることができる
+				normalizedMagnitude = magnitude / (32767 - XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
+			}
+			else // コントローラーがDeadZoneにある時、数値が減少(reduce or Zero Out)
+			{
+				magnitude = 0.0;
+				normalizedMagnitude = 0.0;
+			}
+
+			if (Player1->GetState().Gamepad.sThumbRX > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)
+			{
+				std::cout << "[R STICK RIGHT] Working Now\n";
+			}
+
+			if (Player1->GetState().Gamepad.sThumbRX < -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)
+			{
+				std::cout << "[R STICK LEFT] Working Now\n";
+			}
+
+			if (Player1->GetState().Gamepad.sThumbRY > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)
+			{
+				std::cout << "[R STICK UP] Working Now\n";
+			}
+
+			if (Player1->GetState().Gamepad.sThumbRY < -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)
+			{
+				std::cout << "[R STICK DOWN] Working Now\n";
+			}
+		}
+
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_BACK)
+		{
+
+		}
+
+	}
+	else
+	{
+		std::cout << "\n\tERROR! PLAYER 1 - XBOX 360 Controller Not Found!\n";
+		std::cout << "Press Any Key To Exit.";
+		std::cin.get();
+	}
+
+
+
+	delete(Player1);
+
+	return(0);
+
+}
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPTSTR lpszCmdLine, int nCmdShow)
 {
+
 	HWND hWnd;
-	MSG msg;
+
 	CMainWindow* pMainWindow;
 
 	WNDCLASS WndClass;                                                   // 윈도우 클래스 타입인 WNDCLASSEX의 변수를 만들고 각 필드에 값 부여
@@ -40,13 +252,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	ShowWindow(hWnd, nCmdShow);								 // nCmdShow는 윈도우를 화면에 나타내는 방법으로 상수값을 제공한다.
 	UpdateWindow(hWnd);													 // 윈도우에 WM_PAINT 메시지를 보내 화면에 기본 출력을 한다.
 
+
+	MSG msg;
+
 	while (GetMessage(&msg, NULL, 0, 0))
 	{
-			TranslateMessage(&msg);                                          // 두 메시지를 하나로 변형할때 사용한다.
-			DispatchMessage(&msg);                                           // 메시지를 처리하는 함수에 메시지를 보낸다.
-	}
-	return (int)msg.wParam;
 
+		TranslateMessage(&msg);                                          // 두 메시지를 하나로 변형할때 사용한다.
+		DispatchMessage(&msg);                                           // 메시지를 처리하는 함수에 메시지를 보낸다.
+
+	}
+
+	return (int)msg.wParam;
 
 	return TRUE;
 }
